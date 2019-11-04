@@ -68,7 +68,7 @@ if (this.y < 0) {
 };
 
 function Computer() {
-this.paddle = new Paddle((width-20), (height/2-25), 10, 70);
+this.paddle = new Paddle((width-20), (height/2-35), 10, 70);
 }
 
 Computer.prototype.render = function () {
@@ -92,7 +92,7 @@ Computer.prototype.update = function (ball) {
 };
 
 function Player() {
-this.paddle = new Paddle(10, (height/2-25), 10, 70);
+this.paddle = new Paddle(10, (height/2-35), 10, 70);
 }
 
 Player.prototype.render = function () {
