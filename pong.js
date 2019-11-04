@@ -4,6 +4,8 @@ var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame
 var canvas = document.createElement("canvas");
 var width = 1000;
 var height = 600;
+var left_score = 0;
+var right_score = 0;
 canvas.width = width;
 canvas.height = height;
 var context = canvas.getContext('2d');
@@ -19,6 +21,9 @@ context.fillRect(0, 0, width, height);
 player.render();
 computer.render();
 ball.render();
+context.fillText(left_score,250,80);
+context.fillText(right_score,750,80);
+context.font = "100px Monospace";
 };
 
 var update = function () {
@@ -142,6 +147,14 @@ if (this.x < 0 || this.x > width) {   // A point was scored
     this.y_speed = 0;
     this.x = width / 2;
     this.y = height / 2;
+}
+
+if (this.x < 5) {
+    right_score = right_score + 1;
+}
+
+if (this.x > width - 5) {
+    left_score = left_score + 1;
 }
 
 if(right_x < height) {
