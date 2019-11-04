@@ -71,19 +71,19 @@ this.paddle.render();
 };
 
 Computer.prototype.update = function (ball) {
-var y_pos = ball.y;
-var diff = -((this.paddle.y + (this.paddle.height / 2)) - y_pos);
-if (diff < 0 && diff < -7) {
-    diff = -5;
-} else if (diff > 0 && diff > 7) {
-    diff = 5;
-}
-this.paddle.move(0, diff);
-if (this.paddle.y < 0) {
-    this.paddle.y = 0;
-} else if (this.paddle.y + this.paddle.height > height) {
-    this.paddle.y = height - this.paddle.height;
-}
+    var y_pos = ball.y;
+    var diff = -((this.paddle.y + (this.paddle.height / 2)) - y_pos);
+    if (diff < 0 && diff < -7) {
+        diff = -5;
+    } else if (diff > 0 && diff > 7) {
+        diff = 5;
+    }
+    this.paddle.move(0, diff);
+    if (this.paddle.y < 0) {
+        this.paddle.y = 0;
+    } else if (this.paddle.y + this.paddle.height > height) {
+        this.paddle.y = height - this.paddle.height;
+    }
 };
 
 function Player() {
