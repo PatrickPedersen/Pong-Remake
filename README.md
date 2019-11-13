@@ -15,3 +15,6 @@ Planlagt, Co-Op på samme maskine.
 Muligvis over nettet.
 
 Tilfældige obstacles
+
+
+hej med dig test
