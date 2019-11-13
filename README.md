@@ -14,3 +14,4 @@ Styret med piletaster.
 Planlagt, Co-Op på samme maskine.
 Muligvis over nettet.
 
+Tilfældige obstacles
