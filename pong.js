@@ -1,29 +1,34 @@
 var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
     window.setTimeout(callback, 1000 / 60)
 };
+
+// Canvas Variabler
 var canvas = document.createElement("canvas");
+var pong = canvas.getContext('2d');
 var width = 1000;
 var height = 600;
+
+// Spil Variabler
 var left_score = 0;
 var right_score = 0;
-canvas.width = width;
-canvas.height = height;
-var context = canvas.getContext('2d');
 var player = new Player();
 var computer = new Computer();
 var ball = new Ball((width/2), (height/2));
-
 var keysDown = {};
 
+// Definerer canvassets størelse
+canvas.width = width;
+canvas.height = height;
+
 var render = function () {
-context.fillStyle = "#000000";
-context.fillRect(0, 0, width, height);
+pong.fillStyle = "#000000";
+pong.fillRect(0, 0, width, height);
 player.render();
 computer.render();
 ball.render();
-context.fillText(left_score,250,80);
-context.fillText(right_score,750,80);
-context.font = "100px Monospace";
+pong.fillText(left_score,250,80);
+pong.fillText(right_score,750,80);
+pong.font = "100px Monospace";
 };
 
 var update = function () {
@@ -48,8 +53,8 @@ this.y_speed = 0;
 }
 
 Paddle.prototype.render = function () {
-context.fillStyle = "#FFFFFF";
-context.fillRect(this.x, this.y, this.width, this.height);
+pong.fillStyle = "#FFFFFF";
+pong.fillRect(this.x, this.y, this.width, this.height);
 };
 
 // Rammer for paddles
@@ -120,10 +125,10 @@ this.y_speed = 0;
 }
 
 Ball.prototype.render = function () {
-context.beginPath();
-context.arc(this.x, this.y, 5, 2 * Math.PI, false);
-context.fillStyle = "#FFFFFF";
-context.fill();
+pong.beginPath();
+pong.arc(this.x, this.y, 5, 2 * Math.PI, false);
+pong.fillStyle = "#FFFFFF";
+pong.fill();
 };
 
 Ball.prototype.update = function (paddle1, paddle2) {
@@ -133,6 +138,7 @@ var right_x = this.x - 5;
 var right_y = this.y - 5;
 var left_x = this.x + 5;
 var left_y = this.y + 5;
+
 
 if (this.y - 5 < 0) {   // Hitting the top wall
     this.y = 5;
