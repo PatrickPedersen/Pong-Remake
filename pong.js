@@ -192,3 +192,19 @@ keysDown[event.keyCode] = true;
 window.addEventListener("keyup", function (event) {
 delete keysDown[event.keyCode];
 });
+
+var before,
+    now,
+    fps;
+before = Date.now();
+fps = 0;
+
+requestAnimationFrame(
+    function loop(){
+        now = Date.now();
+        fps = Math.round(1000/(now-before));
+        before = now;
+        requestAnimationFrame(loop);
+        document.getElementById("fps").innerHTML = fps;
+    }
+ );
