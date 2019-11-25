@@ -163,6 +163,7 @@ if (this.x > width - 5) {
     left_score = left_score + 1;
 }
 
+
 if(right_x < height) {
     if(right_y < (paddle1.y + paddle1.height) && left_y > paddle1.y && right_x < (paddle1.x + paddle1.width) && left_x > paddle1.x) {
       // hit the player's paddle
@@ -192,3 +193,19 @@ keysDown[event.keyCode] = true;
 window.addEventListener("keyup", function (event) {
 delete keysDown[event.keyCode];
 });
+
+var before,
+    now,
+    fps;
+before = Date.now();
+fps = 0;
+
+requestAnimationFrame(
+    function loop(){
+        now = Date.now();
+        fps = Math.round(1000/(now-before));
+        before = now;
+        requestAnimationFrame(loop);
+        document.getElementById("fps").innerHTML = fps;
+    }
+ );
