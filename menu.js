@@ -19,7 +19,7 @@ function init(){
     backgroundY = 0;
     speed = 0;
 
-    buttonX = [455,463,463,463];
+    buttonX = [455,359,403,418];
     buttonY = [260,300,340,380];
     buttonWidth = [96,260,182,160];
     buttonHeight = [40,40,40,40];
@@ -93,7 +93,7 @@ function init(){
     }
     function draw(){
         context.drawImage(bgImage, 0, backgroundY);
-        context.drawImage(logoImage, 350, 168);
+        context.drawImage(logoImage, 298, 100);
         context.drawImage(playImage, buttonX[0], buttonY[0]);
         context.drawImage(instructImage, buttonX[1], buttonY[1]);
         context.drawImage(settingsImage, buttonX[2], buttonY[2]);
