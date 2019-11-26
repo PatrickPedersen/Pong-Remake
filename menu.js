@@ -21,7 +21,7 @@ function init(){
 
     buttonX = [455,359,403,418];
     buttonY = [260,300,340,380];
-    buttonWidth = [96,260,182,160];
+    buttonWidth = [96,285,195,165];
     buttonHeight = [40,40,40,40];
 
     shipX = [0,0];
@@ -84,10 +84,10 @@ function init(){
         backgroundY = 0;
         }
         if(shipSize == shipWidth){
-        shipRotate = 0;
+        shipRotate = -1;
         }
         if(shipSize == 0){
-        shipRotate = 0;
+        shipRotate = 1;
         }
         shipSize += shipRotate;
     }
