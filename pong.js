@@ -163,6 +163,7 @@ if (this.x > width - 5) {
     left_score = left_score + 1;
 }
 
+
 if(right_x < height) {
     if(right_y < (paddle1.y + paddle1.height) && left_y > paddle1.y && right_x < (paddle1.x + paddle1.width) && left_x > paddle1.x) {
       // hit the player's paddle
