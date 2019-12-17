@@ -12,6 +12,22 @@ var context = canvas.getContext('2d');
 var player = new Player();
 var computer = new Computer();
 var ball = new Ball((width/2), (height/2));
+var trailcol = (255,255,255)
+var i
+
+var trailcount = [];
+
+var trail = {
+    r: 5,
+    col: (trailcol),
+}
+
+function balltrail(x, y, width, height) {
+    this.x = ball.x;
+    this.y = ball.y;
+    this.width = trail.r;
+    this.height = trail.r;
+    }
 
 var keysDown = {};
 
@@ -30,6 +46,14 @@ var update = function () {
 player.update();
 computer.update(ball);
 ball.update(player.paddle, computer.paddle);
+trailcount.push(trail)
+for (i = trailcount.length-1; trailcount.length-1 < trailcount.length; i++) {
+    function balltrail(x, y, width, height);
+    trailcount.push(trail);
+  }
+if (trailcount > 50){
+    trailcount.shift();
+}
 };
 
 var step = function () {
@@ -124,6 +148,7 @@ context.beginPath();
 context.arc(this.x, this.y, 5, 2 * Math.PI, false);
 context.fillStyle = "#FFFFFF";
 context.fill();
+
 };
 
 Ball.prototype.update = function (paddle1, paddle2) {
