@@ -153,19 +153,24 @@ function checkClick(mouseEvent){
     };
 };
 
-function fadeOut(){
-    pong.fillStyle = "rgba(0,0,0, 0.2)";
-    pong.fillRect (0, 0, width, height);
-    time += 0.1;
-    if(time >= 2){
-        clearInterval(fadeId);
-        time = 0;
-        timerId = setInterval("update()", 1000/frames);
-        canvas.addEventListener("mousemove", checkPos);
-        canvas.addEventListener("mouseup", checkClick);
-    };
-};
+// function fadeOut(){
+//     pong.fillStyle = "rgba(0,0,0, 0.2)";
+//     pong.fillRect (0, 0, width, height);
+//     time += 0.1;
+//     if(time >= 2){
+//         clearInterval(fadeId);
+//         time = 0;
+//         timerId = setInterval("update()", 1000/frames);
+//         canvas.addEventListener("mousemove", checkPos);
+//         canvas.addEventListener("mouseup", checkClick);
+//     };
+// };
 
-window.onload = function() {
-    this.document.body.appendChild(canvas);
-};
+function myFunction() {
+    var x = document.getElementById("canvas");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+}
