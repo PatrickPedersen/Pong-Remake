@@ -1,0 +1,180 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+  
+body {
+    font-family: arial, sans-serif;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+  
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: 1px solid black;
+    z-index: 1;
+    width: 1000px;
+    height: 600px;
+}
+  
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+}
+
+li {
+    padding: 10px 0;
+    z-index: 2;
+}
+
+a:link {
+    color: white;
+    text-decoration: none;
+}
+
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+a:active {
+    color: white;
+    text-decoration: none;
+}
+
+.wrapper {
+    width: 1000px;
+    height: 600px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+  
+#menu {
+    position: absolute;
+    width: 1000px;
+    height: 600px;
+    border: 1px solid black;
+    z-index: 2;
+    text-align: center;
+    background-color: grey;
+}
+
+#pause-menu {
+    position: absolute;
+    display: none;
+    width: 300px;
+    height: 200px;
+    border: 1px solid white;
+    background-color: black;
+    z-index: 2;
+    text-align: center;
+    left: 350px;
+    top: 200px;
+}
+
+#pause-menu h1 {
+    position: relative;
+    margin: auto;
+    text-align: center;
+}
+
+#menu.main {
+  background-image: url('Images/Pong-Canvas.png');
+}
+
+#menu.credits {
+  background-image: url('Images/credits.png');
+}
+
+h1 {
+    color: white;
+}
+
+h3 {
+    height: 30px;
+    margin: auto;
+}
+  
+.pause {
+  position: absolute;
+  cursor: pointer;
+  z-index: 2;
+}
+
+#main {
+  display: block;
+  height: 80%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+.button {
+  display: block;
+  margin: auto;
+  line-height: 30px;
+}
+
+#b-play {
+    width: 96px;
+    height: 30px;
+}
+
+#b-instructions {
+    width: 285px;
+    height: 33px;
+}
+
+#b-settings {
+    width: 195px;
+    height: 30px;
+}
+
+#b-credits {
+    width: 165px;
+}
+
+#b-pause {
+    position: absolute;
+    top: 5px;
+    left: 975px;
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+#b-resume {
+    width: 190px;
+    height: 30px;
+    padding-top: 10px;
+}
+
+#b-menu {
+    width: 190px;
+    height: 30px;
+}
+
+#game-over {
+  display: none;
+  text-align: center;
+  padding-top: 92px;
+  z-index: 1;
+  width: 1000px;
+  height: 600px;
+  position: absolute;
+}

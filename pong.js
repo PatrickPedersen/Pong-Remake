@@ -1,10 +1,15 @@
-var animate = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function (callback) {
-    window.setTimeout(callback, 1000 / 60)
+var animate = window.requestAnimationFrame       ||
+              window.webkitRequestAnimationFrame ||
+              window.mozRequestAnimationFrame    ||
+              window.oRequestAnimationFrame      ||
+              window.msRequestAnimationFrame     ||
+              function(callback, element){
+                window.setTimeout(callback, 1000 / 60);
 };
 
 // Canvas Variabler
-var canvas = document.createElement("canvas");
-var pong = canvas.getContext('2d');
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext('2d');
 var width = 1000;
 var height = 600;
 
@@ -21,14 +26,14 @@ canvas.width = width;
 canvas.height = height;
 
 var render = function () {
-pong.fillStyle = "#000000";
-pong.fillRect(0, 0, width, height);
+ctx.fillStyle = "#000000";
+ctx.fillRect(0, 0, width, height);
 player.render();
 computer.render();
 ball.render();
-pong.fillText(left_score,250,80);
-pong.fillText(right_score,750,80);
-pong.font = "100px Monospace";
+ctx.fillText(left_score,250,80);
+ctx.fillText(right_score,750,80);
+ctx.font = "100px Monospace";
 };
 
 var update = function () {
@@ -53,8 +58,8 @@ this.y_speed = 0;
 }
 
 Paddle.prototype.render = function () {
-pong.fillStyle = "#FFFFFF";
-pong.fillRect(this.x, this.y, this.width, this.height);
+ctx.fillStyle = "#FFFFFF";
+ctx.fillRect(this.x, this.y, this.width, this.height);
 };
 
 // Rammer for paddles
@@ -125,10 +130,10 @@ this.y_speed = 0;
 }
 
 Ball.prototype.render = function () {
-pong.beginPath();
-pong.arc(this.x, this.y, 5, 2 * Math.PI, false);
-pong.fillStyle = "#FFFFFF";
-pong.fill();
+ctx.beginPath();
+ctx.arc(this.x, this.y, 5, 2 * Math.PI, false);
+ctx.fillStyle = "#FFFFFF";
+ctx.fill();
 };
 
 Ball.prototype.update = function (paddle1, paddle2) {
@@ -182,7 +187,6 @@ if(right_x < height) {
 };
 
 window.onload = function() {
-    this.document.body.appendChild(canvas);
     this.animate(step);
 };
 
@@ -208,4 +212,13 @@ requestAnimationFrame(
         requestAnimationFrame(loop);
         document.getElementById("fps").innerHTML = fps;
     }
- );
+);
+
+function myFunction() {
+    var x = document.getElementById("canvas");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+}
