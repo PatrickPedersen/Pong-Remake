@@ -1,19 +1,56 @@
+// Variabler
 let paused = true;
+let aiControl = false;
 var topPressed = false;
 var downPressed = false;
+var gTopPressed = false;
+var gDownPressed = false;
 
+// Definer Canvas
 const canvas = document.getElementById("canvas");
 
+// Definer Context til 2D
 const ctx = canvas.getContext("2d");
 
+// Definere function delay så vi kan pause spillet i 3 sekunder ved spil start.
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-document.getElementById("b-play").onclick = async () => {
+////// MENU \\\\\\
+
+// Når vi klikker "play" gemmes menuen og spillet vises, spillet pauses her i 3 sekunder, så spilleren kan forberede sig.
+document.getElementById("b-play").onclick = function() {
+    document.getElementById("main-menu").style.display = "none";
+    document.getElementById("choose-game").style.display = "block";
+}
+
+document.getElementById("b-playerVScomputer").onclick = async () => {
     document.getElementById("menu").style.display = "none";
+    if (aiControl == false) {
+        aiControlled()
+    }
     await delay(150);
     togglePause();
-};
+}
 
+document.getElementById("b-playerVSplayer").onclick = async () => {
+    document.getElementById("menu").style.display = "none";
+    if (aiControl == true) {
+        aiControlled()
+    }
+    await delay(150);
+    togglePause();
+}
+
+// document.getElementById("b-play").onclick = async () => {
+//     document.getElementById("menu").style.display = "none";
+//     await delay(150);
+//     togglePause();
+// };
+
+console.log(aiControl)
+
+// Her fanger vi vores menu elementer og giver dem deres display styles.
+// På denne måde kan vi gemme specifikke menuer når de ikke skal bruges/vises.
 document.getElementById("b-pause").onclick = function() {
     togglePause();
     document.getElementById("pause-menu").style.display = "block";
@@ -28,13 +65,26 @@ document.getElementById("b-resume").onclick = function() {
 
 document.getElementById("b-menu").onclick = function() {
     document.getElementById("menu").style.display = "block";
+    document.getElementById("choose-game").style.display = "none";
+    document.getElementById("main-menu").style.display = "block";
     document.getElementById("pause-menu").style.display = "none";
     document.getElementById("b-pause").style.display = "block";
     reset();
 }
 
+function aiControlled() {
+    if (!aiControl)
+    {
+        aiControl = true;
+    } else if (aiControl)
+    {
+       aiControl = false;
+    }
+}
+
 ////// GAME \\\\\\
 
+// Her specificerer vi vores filterstrenght og frametime brugt til vores FPS counter.
 var filterStrength = 20;
 var frameTime = 0, lastLoop = new Date, thisLoop;
 
@@ -49,27 +99,24 @@ const ball = {
     color : "WHITE"
 }
 
-// User Paddle
-const user = {
+// playerOne Paddle
+const playerOne = {
     x : 10, // Venstre side af canvas
     y : (canvas.height - 100)/2, // -100 højden af paddle
     width : 10,
     height : 100,
     score : 0,
     color : "WHITE",
-    x_speed : 0,
-    y_speed : 0
 }
 
-
-// com Paddle
-const com = {
-    x : canvas.width - 20, // - width af paddle
+// playerTwo Paddle
+const playerTwo = {
+    x : canvas.width - 20, // Højre side af canvas
     y : (canvas.height - 100)/2, // -100 højden af paddle
     width : 10,
     height : 100,
     score : 0,
-    color : "WHITE"
+    color : "WHITE",
 }
 
 // NET
@@ -80,7 +127,8 @@ const net = {
     width : 2,
     color : "WHITE"
 }
-   
+
+// Her definere vi tasten "p" til vores demo af pause funktionen. Bliver fjernet senere.
 window.addEventListener('keydown', function (e) {
 var key = e.keyCode;
 if (key === 80)// p key
@@ -88,7 +136,8 @@ if (key === 80)// p key
     togglePause();
 }
 });
-   
+
+// Functionen for at pause spillet.
 function togglePause()
 {
     if (!paused)
@@ -96,10 +145,12 @@ function togglePause()
         paused = true;
     } else if (paused)
     {
-       paused= false;
+       paused = false;
     }
 
 }
+
+console.log(aiControl)
 
 // Tegn en firkant, til at tegne paddles
 function drawRect(x, y, w, h, color){
@@ -116,32 +167,57 @@ function drawArc(x, y, r, color){
     ctx.fill();
 }
 
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
+// Her tilføjer vi nogle EventListeners så vi kan fange keyboard input.
+// Som f.eks. "W" og "S" til playerOne og senere "ArrowUp" og "ArrowDown" til PlayerTwo.
+document.addEventListener("keydown", playerOneKeyDownHandler, false);
+document.addEventListener("keyup", playerOneKeyUpHandler, false);
 
-function keyDownHandler(e) {
-    if(e.key == "Up" || e.key == "ArrowUp") {
-        topPressed = true;
-    }
-    else if(e.key == "Down" || e.key == "ArrowDown") {
-        downPressed = true;
-    }
-}
-
-function keyUpHandler(e) {
-    if(e.key == "Up" || e.key == "ArrowUp") {
-        topPressed = false;
-    }
-    else if(e.key == "Down" || e.key == "ArrowDown") {
-        downPressed = false;
+function playerOneKeyDownHandler(e) {
+    var code = e.keyCode;
+    switch (code) {
+        case 87: topPressed = true; break; //Key W
+        case 83: downPressed = true; break; //Key S
     }
 }
 
-function keysReleased(e) {
-    // mark keys that were released
-    keys[e.keyCode] = false;
-} 
+function playerOneKeyUpHandler(e) {
+    var code = e.keyCode;
+    switch (code) {
+        case 87: topPressed = false; break; //Key W
+        case 83: downPressed = false; break; //Key S
+    }
+}
 
+function playerTwoKeyDownHandler(f) {
+    var code = f.keyCode;
+    if (aiControl == false) { // Stoppe spiller fra at snyde med AI tændt.
+        switch (code) {
+            case 38: gTopPressed = true; break; //Key ArrowUp
+            case 40: gDownPressed = true; break; //Key ArrowDown
+        }
+    } else {
+        switch (code) {
+            case 38: gTopPressed = false; break; //Key ArrowUp
+            case 40: gDownPressed = false; break; //Key ArrowDown
+        }
+    }
+    
+}
+
+function playerTwoKeyUpHandler(f) {
+    var code = f.keyCode;
+    switch (code) {
+        case 38: gTopPressed = false; break; //Key ArrowUp
+        case 40: gDownPressed = false; break; //Key ArrowDown
+    }
+}
+
+document.addEventListener("keydown", playerTwoKeyDownHandler, false);
+document.addEventListener("keyup", playerTwoKeyUpHandler, false);
+
+console.log(aiControl)
+
+// Boldens start position efter reset.
 function startBall(){
     ball.x = canvas.width/2;
     ball.y = canvas.height/2;
@@ -158,14 +234,16 @@ function resetBall(){
     ball.speed = 7;
 }
 
+// Paddles start position efter reset.
 function resetPaddle(){
-    user.y = (canvas.height - 100)/2;
-    com.y = (canvas.height - 100)/2;
+    playerOne.y = (canvas.height - 100)/2;
+    playerTwo.y = (canvas.height - 100)/2;
 }
 
+// Score sættes til 0 ved spil start og hvis spiller går tilbage til menu.
 function resetScore(){
-    user.score = 0;
-    com.score = 0;
+    playerOne.score = 0;
+    playerTwo.score = 0;
 }
 
 // Draw net
@@ -174,6 +252,8 @@ function drawNet(){
         drawRect(net.x, net.y + i, net.width, net.height, net.color);
     }
 }
+
+console.log(aiControl)
 
 // Draw text
 function drawText(text,x,y){
@@ -204,51 +284,73 @@ function collision(b,p){
 }
 
 function update(){
-    // com score
+    // PlayerTwo score
     if( ball.x - ball.radius < 0 ){
-        com.score++;
+        playerTwo.score++;
         resetBall();
-    } // Player Score
+    } // PlayerOne Score
     else if( ball.x + ball.radius > canvas.width){
-        user.score++;
+        playerOne.score++;
         resetBall();
     }
 
+    // Hænger sammen med EventListener. Her specificerer vi hvad vi gør nå specifikke taster trykkes.
+    // Her er det for "playerOne".
     if (topPressed) {
-        user.y -= 7;
-        if (user.y < 0) {
-            user.y = 0;
+        playerOne.y -= 7;
+        if (playerOne.y < 0) {
+            playerOne.y = 0;
         }
     }
     else if (downPressed) {
-        user.y += 7;
-        if (user.y + user.height > canvas.height) {
-            user.y = canvas.height - user.height;
+        playerOne.y += 7;
+        if (playerOne.y + playerOne.height > canvas.height) {
+            playerOne.y = canvas.height - playerOne.height;
         }
     }
 
-    if (com.y < 0) {
-        com.y = 0;
-    } else if (com.y + com.height > canvas.height) {
-        com.y = canvas.height - com.height;
+    // Her er det for "playerTwo"
+    if (gTopPressed) {
+        playerTwo.y -= 7;
+        if (playerTwo.y < 0) {
+            playerTwo.y = 0;
+        }
     }
+    else if (gDownPressed) {
+        playerTwo.y += 7;
+        if (playerTwo.y + playerTwo.height > canvas.height) {
+            playerTwo.y = canvas.height - playerTwo.height;
+        }
+    }
+
+    if (aiControl == true) {
+        if (playerTwo.y < 0) {
+            playerTwo.y = 0;
+        } else if (playerTwo.y + playerTwo.height > canvas.height) {
+            playerTwo.y = canvas.height - playerTwo.height;
+        }
+    }
+
+    console.log(aiControl)
     
     // Giv bolden en hastighed
     ball.x += ball.velocityX;
     ball.y += ball.velocityY;
-    
-    user.y += user.y_speed;
 
     // Simpel AI
-    com.y += ((ball.y - (com.y + com.height/2)))*0.1;
+    if (aiControl == true) {
+        playerTwo.y += ((ball.y - (playerTwo.y + playerTwo.height/2)))*0.1;
+    }
+
+    console.log(aiControl)
     
     // Når bolden rammer toppen eller bunden, så vender vi Y velocity
     if(ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height){
         ball.velocityY = -ball.velocityY;
     }
     
-    // vi tjekker om bolden rammer spilleren eller comens paddle
-    let player = (ball.x + ball.radius < canvas.width/2) ? user : com;
+    // vi tjekker om bolden rammer PLayerOne eller PlayerTwo paddle
+    let player = (ball.x + ball.radius < canvas.width/2) ? playerOne : playerTwo;
     
     // Hvis bolden rammer paddlen
     if(collision(ball,player)){
@@ -272,11 +374,13 @@ function update(){
         ball.speed += 0.1;
     }
 
+    // Her finder vi vores frame count i millisekunder.
     var thisFrameTime = (thisLoop=new Date) - lastLoop;
     frameTime+= (thisFrameTime - frameTime) / filterStrength;
     lastLoop = thisLoop;
 }
 
+// Her calculerer vi vores actuelle FPS.
 var fpsOut = 0;
 setInterval(function(){
   fpsOut = (1000/frameTime).toFixed(1);
@@ -288,33 +392,37 @@ function render(){
     // Rengør canvas
     drawRect(0, 0, canvas.width, canvas.height, "#000");
     
-    // Tegn user score til venstre
-    drawText(user.score,canvas.width/4,canvas.height/5);
+    // Tegn playerOne score til venstre
+    drawText(playerOne.score,canvas.width/4,canvas.height/5);
     
-    // Tegn com score til højre
-    drawText(com.score,3*canvas.width/4,canvas.height/5);
+    // Tegn playerTwo score til højre
+    drawText(playerTwo.score,3*canvas.width/4,canvas.height/5);
     
+    // Tegn vores FPS count i top venstre hjørne.
     drawFpsText("FPS: " + fpsOut, 5, 17);
     
     // Tegn nettet
     drawNet();
     
-    // Tegn user paddle
-    drawRect(user.x, user.y, user.width, user.height, user.color, user.y_speed);
-    
-    // Tegn com paddle
-    drawRect(com.x, com.y, com.width, com.height, com.color);
+    // Tegn playerOne paddle
+    drawRect(playerOne.x, playerOne.y, playerOne.width, playerOne.height, playerOne.color, playerOne.y_speed);
+
+    // Tegn playerTwo paddle
+    drawRect(playerTwo.x, playerTwo.y, playerTwo.width, playerTwo.height, playerTwo.color);
     
     // Tegn bolden
     drawArc(ball.x, ball.y, ball.radius, ball.color);
 }
 
+// Her specificerer vi hvad vi vil gøre på spil restart. Når spilleren går tilbage til menuen og når spillet starter.
 function reset(){
     startBall();
     resetPaddle();
     resetScore();
 }
 
+// Her sørger vi for at spillet kører så længe det ikke er paused.
+// Hvis det er paused, så stopper spillet.
 function game(){
     if(!paused)
     { 
@@ -323,8 +431,10 @@ function game(){
     render();
 }
 
-// Nummer af FPS
+// Definere hvor mange frames vi vil have pr. sekund.
 let framePerSecond = 60;
 
 // Kald spil functionen x antal gange i sekundet
 let loop = setInterval(game,1000/framePerSecond);
+
+console.log(aiControl)

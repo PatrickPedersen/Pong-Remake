@@ -34,6 +34,12 @@ li {
     z-index: 2;
 }
 
+#choose-game li {
+    padding: 10px 0;
+    z-index: 2;
+    margin: 10px;
+}
+
 a:link {
     color: white;
     text-decoration: none;
@@ -69,7 +75,6 @@ a:active {
     border: 1px solid black;
     z-index: 2;
     text-align: center;
-    background-color: grey;
 }
 
 #pause-menu {
@@ -114,13 +119,32 @@ h3 {
   z-index: 2;
 }
 
-#main {
+#main-menu {
   display: block;
   height: 80%;
   overflow: auto;
   margin: auto;
   position: absolute;
   top: 0; left: 0; bottom: 0; right: 0;
+}
+
+#choose-game {
+    display: none;
+    height: 80%;
+    overflow: auto;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+}
+
+#b-playerVScomputer {
+    width: 434px;
+    height: 29px;
+}
+
+#b-playerVSplayer {
+    width: 434px;
+    height: 29px;
 }
 
 .button {
