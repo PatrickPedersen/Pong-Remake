@@ -41,14 +41,6 @@ document.getElementById("b-playerVSplayer").onclick = async () => {
     togglePause();
 }
 
-// document.getElementById("b-play").onclick = async () => {
-//     document.getElementById("menu").style.display = "none";
-//     await delay(150);
-//     togglePause();
-// };
-
-console.log(aiControl)
-
 // Her fanger vi vores menu elementer og giver dem deres display styles.
 // På denne måde kan vi gemme specifikke menuer når de ikke skal bruges/vises.
 document.getElementById("b-pause").onclick = function() {
@@ -128,15 +120,6 @@ const net = {
     color : "WHITE"
 }
 
-// Her definere vi tasten "p" til vores demo af pause funktionen. Bliver fjernet senere.
-window.addEventListener('keydown', function (e) {
-var key = e.keyCode;
-if (key === 80)// p key
-{
-    togglePause();
-}
-});
-
 // Functionen for at pause spillet.
 function togglePause()
 {
@@ -149,8 +132,6 @@ function togglePause()
     }
 
 }
-
-console.log(aiControl)
 
 // Tegn en firkant, til at tegne paddles
 function drawRect(x, y, w, h, color){
@@ -215,8 +196,6 @@ function playerTwoKeyUpHandler(f) {
 document.addEventListener("keydown", playerTwoKeyDownHandler, false);
 document.addEventListener("keyup", playerTwoKeyUpHandler, false);
 
-console.log(aiControl)
-
 // Boldens start position efter reset.
 function startBall(){
     ball.x = canvas.width/2;
@@ -252,8 +231,6 @@ function drawNet(){
         drawRect(net.x, net.y + i, net.width, net.height, net.color);
     }
 }
-
-console.log(aiControl)
 
 // Draw text
 function drawText(text,x,y){
@@ -330,8 +307,6 @@ function update(){
             playerTwo.y = canvas.height - playerTwo.height;
         }
     }
-
-    console.log(aiControl)
     
     // Giv bolden en hastighed
     ball.x += ball.velocityX;
@@ -341,8 +316,6 @@ function update(){
     if (aiControl == true) {
         playerTwo.y += ((ball.y - (playerTwo.y + playerTwo.height/2)))*0.1;
     }
-
-    console.log(aiControl)
     
     // Når bolden rammer toppen eller bunden, så vender vi Y velocity
     if(ball.y - ball.radius < 0 || ball.y + ball.radius > canvas.height){
@@ -436,5 +409,3 @@ let framePerSecond = 60;
 
 // Kald spil functionen x antal gange i sekundet
 let loop = setInterval(game,1000/framePerSecond);
-
-console.log(aiControl)
