@@ -1,4 +1,4 @@
-# Pro_afl_1
+# Pong-Remake
 Programmerings aflevering nr.1
 
 Navn: Pong Remake
@@ -14,8 +14,3 @@ Singleplayer vil være den primære spilleindstilling, medmindre man vælger and
 
 Co-Op vil også være en mulighed, og det foregår på den samme maskine i dette tilfælde
 styres platformene med W og S på venstre side, og på højre side styres det med piletasterne
-
-
-
-
-
