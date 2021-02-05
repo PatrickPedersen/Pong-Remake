@@ -1,6 +1,8 @@
 ## Pong-Remake
 # English
 
+**DISCLAIMER: This project is no longer being worked on**
+
 Programming assignment nr.1
 
 * Name: Pong Remake
